@@ -12,4 +12,37 @@
     float: left;
     box-sizing: border-box;
     border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle{
+    height: 100%;
+    width: 100%;
+    stroke-dasharray: 188;
+    stroke-dashoffset: 188;
+    animation: draw 1s forwards;
+
+}
+
+.cross{
+    height: 100%;
+    width: 100%;
+
+}
+
+.firstLine{
+    stroke-dasharray: 141;
+    stroke-dashoffset: 141;
+    animation: draw 0.4s forwards;
+}
+.secondLine{
+    stroke-dasharray: 141;
+    stroke-dashoffset: 141;
+    animation: draw 0.4s 0.4s forwards;
+}
+
+@keyframes draw{
+    100% { stroke-dashoffset: 0;}
 }

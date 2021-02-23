@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Statistic from '../statistic/statistic'
 import './main.css'
 
 
@@ -27,35 +28,53 @@ export default class Main extends Component {
             [0, 4, 8],
             [2, 4, 6],
         ]
+        this.circle = <svg className='circle'>
+        <circle r='30' cx='49' cy="49" stroke="red" 
+        strokeWidth='10' fill='none' strokeLinecap='round'/>
+        </svg>
+        this.cross = <svg className='cross'>
+        <line className='firstLine' x1='20' y1='20' x2="80" y2="80" 
+         stroke='blue' strokeWidth='10'  strokeLinecap='round'/>
+         <line className='secondLine' x1='80' y1='20' x2="20" y2="80" 
+         stroke='blue' strokeWidth='10'  strokeLinecap='round'/>
+        </svg>
 
+    }
+
+    drawElement = (element) => {
+        return (
+            element
+        )
     }
 
     winCombo = () => {
 
-        let a = (this.state.count % 2 === 0) ? 'X' : 'O';
+        let a = (this.state.count % 2 === 0) ? this.drawElement(this.cross): this.drawElement(this.circle);
 
         for (let i = 0; i < this.winLine.length; i++) {
             let line = this.winLine[i];
             if (this.state.filds[line[0]] === a
                 && this.state.filds[line[1]] === a
-                && this.state.filds[line[1]] === a) {
+                && this.state.filds[line[2]] === a) {
                     this.setState({filds:Array(9).fill(null)})
                     this.setState({count: 0})
-                console.log(a + 'win')
+                console.log('Winner')
+            } else if(this.state.count === 8) {
+                console.log ('next try')
             }
         }
 
     }
     pointer = (e) => {
         let data = e.target.getAttribute('data');
-        console.log(data)
         let currentSqr = this.state.filds;
         console.log(currentSqr);
         if (currentSqr[data] === null) {
-            currentSqr[data] = (this.state.count % 2 === 0) ? 'X' : 'O';
+            currentSqr[data] = (this.state.count % 2 === 0) ? this.drawElement(this.cross) : this.drawElement(this.circle);
+          
             this.setState({ count: this.state.count + 1 });
             this.setState({ filds: currentSqr });
-
+console.log(this.state.count)
 
         }
         else {
@@ -79,6 +98,7 @@ export default class Main extends Component {
         return (
             <div className='play_filed' >
                 {this.makeFilds()}
+                <Statistic  check={this.state.count}/>
             </div>
         )
     }
