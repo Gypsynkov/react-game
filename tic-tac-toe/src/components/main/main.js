@@ -13,6 +13,8 @@ export default class Main extends Component {
         this.state = {
             filds: Array(9).fill(null),
             count: 0,
+            winnerX: 0,
+            winnerO: 0
 
         }
 
@@ -39,6 +41,8 @@ export default class Main extends Component {
          stroke='blue' strokeWidth='10'  strokeLinecap='round'/>
         </svg>
 
+        this.check = ["Hello"]
+
     }
 
     drawElement = (element) => {
@@ -58,7 +62,14 @@ export default class Main extends Component {
                 && this.state.filds[line[2]] === a) {
                     this.setState({filds:Array(9).fill(null)})
                     this.setState({count: 0})
-                console.log('Winner')
+                    if( a === this.drawElement(this.cross) ){
+                        this.setState({winnerX: this.state.winnerX +1 })
+                        console.log('Winner X')
+                    }else if(a === this.drawElement(this.circle)){
+                        this.setState({winnerO: this.state.winnerO +1 })
+                        console.log('Winner 0')
+                    }
+                
             } else if(this.state.count === 8) {
                 console.log ('next try')
             }
@@ -98,7 +109,7 @@ console.log(this.state.count)
         return (
             <div className='play_filed' >
                 {this.makeFilds()}
-                <Statistic  check={this.state.count}/>
+                <Statistic  winnerX={this.state.winnerX} winnerO={this.state.winnerO}   />
             </div>
         )
     }
