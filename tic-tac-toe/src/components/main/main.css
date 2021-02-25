@@ -17,6 +17,12 @@
     justify-content: center;
 }
 
+.one_grid:hover {
+    background: orange;
+    opacity: 0.2
+   
+   } 
+
 .circle{
     height: 100%;
     width: 100%;
