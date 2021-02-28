@@ -14,15 +14,17 @@ constructor (props){
 }
 
     render() {
-        console.log(this.props)
-       //const check = this.props.check //console.log(this.props)
        const winnX = this.props.winnerX;
        const winnO = this.props.winnerO;
     
         return (
             <div className='statistic' >
-            <div><span>Player X: {winnX}</span></div>
-            <div><span>Player 0: {winnO}</span></div>
+            <div className="winCount">
+                <span>Player X: {winnX}</span>
+                </div>
+            <div className="winCount">
+                <span>Player 0: {winnO}</span>
+                </div>
             </div>
         )
     }
