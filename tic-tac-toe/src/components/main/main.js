@@ -68,7 +68,7 @@ export default class Main extends Component {
     }
 
     circle = <svg className='circle'>
-        <circle r='30' cx='49' cy="49" stroke="red"
+        <circle r='30' cx='49' cy="49" stroke="yellow"
             strokeWidth='10' fill='none' strokeLinecap='round' />
     </svg>
     cross = <svg className='cross'>
@@ -145,7 +145,8 @@ export default class Main extends Component {
         a.forEach((item) => {
             document.querySelectorAll('.one_grid').forEach((e) => {
                 if (item == e.getAttribute('data')) {
-                    e.style.backgroundColor = 'green'
+                    e.style.backgroundColor = 'red'
+                    e.style.opacity = 0.9
                 }
             });
         })
@@ -182,7 +183,6 @@ export default class Main extends Component {
         this.playAudio(reset)
         this.setState({ filds: Array(9).fill(null) })
         this.setState({ count: 0 })
-        //  this.gameState = 'No winner this round'
     }
 
     // play some sounds 
@@ -190,13 +190,8 @@ export default class Main extends Component {
     playAudio = (sound) => {
         if (this.state.music) {
             this.audio = new Audio(sound);
-            //this.audio.src = `../../assets/sounds/${sound}.mp3`;
-            //this.audio.src = `./${sound}.mp3`;
-            //this.audio.play().catch(() => this.audio.currentTime);
-            // this.audio.src = '../pencil.mp3';
             this.audio.play().catch(() => this.audio.currentTime);
         }
-        console.log('try')
     }
     // soundSwitcher 
     soundSwitcher = () => {
@@ -206,8 +201,6 @@ export default class Main extends Component {
         } else {
             this.setState({ music: true });
         }
-
-        console.log('ok')
     }
 
 
@@ -232,25 +225,23 @@ export default class Main extends Component {
 
                 <div className="buttons_block">
                     <div className="button_retry">
-                        <button onClick={this.gameReseter} type="button" className="btn btn-danger"> New Game </button>
+                        <button onClick={this.gameReseter} type="button" className="btn btn-danger"> Reset </button>
                     </div>
 
                 </div>
 
                 <div className='main_play_filed'>
-                    <div className='play_state'>{this.gameState}</div>
+               
 
                     <div className='play_filed'> {this.makeFilds()} </div>
-                    <div className='play_settings'>
-                        <div className="button_vs_computer">
-                            <button onClick={this.gameReseter} type="button" className="btn btn-success"> Play with  Computer</button>
-                        </div>
-                        <div className="button_vs_computer">
+                    {/* <div className='play_settings'>
+                        <div className="button_sound">
                             <button onClick={this.soundSwitcher} type="button" className="btn  btn-success"> Sound</button>
-                        </div></div>
+                        </div>
+                        </div> */}
                 </div>
 
-
+                <div className='play_state'>{this.gameState}</div>
                 <div className='win_counter'><Statistic winnerX={this.state.winnerX} winnerO={this.state.winnerO} /></div>
 
 
