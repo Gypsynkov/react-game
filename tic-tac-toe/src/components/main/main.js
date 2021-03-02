@@ -116,6 +116,16 @@ export default class Main extends Component {
 
     }
 
+    checkNowinner = ( arr ) =>{
+        arr.forEach((e)=>{
+            if( e != null){
+                return true
+            } else {
+                return false
+            }
+        })
+    }
+
     // code with point element on grid
     pointer = (e) => {
         let data = e.target.getAttribute('data');
@@ -179,11 +189,19 @@ export default class Main extends Component {
 
     // reset button 
 
-    gameReseter = () => {
+    roundReseter = () => {
         this.playAudio(reset)
+        this.gameState = 'Please X start'
         this.setState({ filds: Array(9).fill(null) })
         this.setState({ count: 0 })
     }
+   // reset count button 
+
+   countReseter = () => {
+    this.playAudio(reset)
+    this.setState({ winnerX: 0 })
+    this.setState({ winnerO: 0 })
+}
 
     // play some sounds 
 
@@ -225,9 +243,12 @@ export default class Main extends Component {
 
                 <div className="buttons_block">
                     <div className="button_retry">
-                        <button onClick={this.gameReseter} type="button" className="btn btn-danger"> Reset </button>
+                        <button onClick={this.roundReseter} type="button" className="btn btn-danger"> Reset round</button>
                     </div>
-
+                    <div className='play_state'>{this.gameState}</div>
+                    <div className="button_retry">
+                        <button onClick={this.countReseter} type="button" className="btn btn-danger"> Reset count</button>
+                    </div>
                 </div>
 
                 <div className='main_play_filed'>
@@ -241,7 +262,7 @@ export default class Main extends Component {
                         </div> */}
                 </div>
 
-                <div className='play_state'>{this.gameState}</div>
+               
                 <div className='win_counter'><Statistic winnerX={this.state.winnerX} winnerO={this.state.winnerO} /></div>
 
 

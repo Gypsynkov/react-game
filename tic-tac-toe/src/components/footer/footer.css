@@ -1,10 +1,15 @@
 .footer{
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     background-color: white;
     color: red;
     text-align: center;
-    font-size: 3.5rem;
-    min-height: 150px;
+    font-size: 1.5rem;
+    min-height: 100px;
+}
+
+.app_logo_rs{
+max-width: 50px;
+max-height: 40px;
 }
