@@ -17,20 +17,20 @@ import error from '../../assets/sounds/error.mp3'
 
 
 export default class Main extends Component {
-    componentDidUpdate() {
-        localStorage.setItem('state', JSON.stringify(this.state))
-    }
-    componentDidMount() {
-        const currentState = localStorage.getItem('state')
-        const ourState = JSON.parse(currentState)
-        this.setState({
-            winnerX: ourState.winnerX,
-            winnerO: ourState.winnerO,
-            musicState: ourState.musicState,
-            music: ourState.music,
-        });
+    // componentDidUpdate() {
+    //     localStorage.setItem('state', JSON.stringify(this.state))
+    // }
+    // componentDidMount() {
+    //     const currentState = localStorage.getItem('state')
+    //     const ourState = JSON.parse(currentState)
+    //     this.setState({
+    //         winnerX: ourState.winnerX,
+    //         winnerO: ourState.winnerO,
+    //         musicState: ourState.musicState,
+    //         music: ourState.music,
+    //     });
 
-    }
+    //  }
     constructor(props) {
         super();
 
@@ -130,7 +130,6 @@ export default class Main extends Component {
 
         }
         else {
-            console.log('bad idea')
             this.playAudio(error)
         }
 
