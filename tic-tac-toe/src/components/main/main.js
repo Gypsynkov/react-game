@@ -5,6 +5,7 @@ import pencils from '../../assets/sounds/pencil.mp3'
 import win from '../../assets/sounds/win.mp3'
 import draw from '../../assets/sounds/draw.mp3'
 import reset from '../../assets/sounds/reset.mp3'
+import error from '../../assets/sounds/error.mp3'
 
 
 // window.onload = function () {
@@ -16,26 +17,20 @@ import reset from '../../assets/sounds/reset.mp3'
 
 
 export default class Main extends Component {
-    //     componentDidUpdate () {
-    //         localStorage.setItem('state', JSON.stringify(this.state))
-    //     }
-    //     componentDidMount (){
-    //         const currentState = localStorage.getItem('state')
-    //     const ourState = JSON.parse(currentState)
-    //     console.log(ourState.filds)
-    //     // console.log('ok')
-    //     this.setState({ count: ourState.count});
-    //     this.setState({ count: ourState.count});
+    componentDidUpdate() {
+        localStorage.setItem('state', JSON.stringify(this.state))
+    }
+    componentDidMount() {
+        const currentState = localStorage.getItem('state')
+        const ourState = JSON.parse(currentState)
+        this.setState({
+            winnerX: ourState.winnerX,
+            winnerO: ourState.winnerO,
+            musicState: ourState.musicState,
+            music: ourState.music,
+        });
 
-    //  ourState.filds.forEach((e)=>{
-    //      if(e !=null && e.props.className == 'cross' ){
-    //         console.log (e.props.className) 
-    //         e = this.cross
-    //      }
-
-    //  })
-    //  console.log(this.circle)
-    //     }
+    }
     constructor(props) {
         super();
 
@@ -45,6 +40,7 @@ export default class Main extends Component {
             winnerX: 0,
             winnerO: 0,
             music: true,
+            musicState: 'ON'
         }
 
         this.gameState = 'Please X start'
@@ -116,42 +112,37 @@ export default class Main extends Component {
 
     }
 
-    checkNowinner = ( arr ) =>{
-        arr.forEach((e)=>{
-            if( e != null){
-                return true
-            } else {
-                return false
-            }
-        })
-    }
 
     // code with point element on grid
     pointer = (e) => {
         let data = e.target.getAttribute('data');
         let currentSqr = this.state.filds;
-        console.log(currentSqr);
         if (currentSqr[data] === null) {
             currentSqr[data] = (this.state.count % 2 === 0) ? this.drawElement(this.cross) : this.drawElement(this.circle);
             this.gameState = (this.state.count % 2 === 0) ? "Player O must play" : 'Player X must play'
 
-            this.setState({ count: this.state.count + 1 });
-            this.setState({ filds: currentSqr });
+            this.setState({
+                count: this.state.count + 1,
+                filds: currentSqr
+            });
             this.playAudio(pencils)
 
 
         }
         else {
             console.log('bad idea')
+            this.playAudio(error)
         }
 
         this.winCombo();
 
     }
+
+
+
     // code for hover grid for win combo
 
     hover = (a) => {
-        console.log(...a)
         a.forEach((item) => {
             document.querySelectorAll('.one_grid').forEach((e) => {
                 if (item == e.getAttribute('data')) {
@@ -165,8 +156,10 @@ export default class Main extends Component {
     // reboot grid in EndGame
 
     defaultGrid = () => {
-        this.setState({ filds: Array(9).fill(null) })
-        this.setState({ count: 0 })
+        this.setState({
+            filds: Array(9).fill(null),
+            count: 0
+        })
         this.gameState = 'Please X start'
         document.querySelectorAll('.one_grid').forEach((e) => {
             e.style.backgroundColor = 'white'
@@ -192,16 +185,21 @@ export default class Main extends Component {
     roundReseter = () => {
         this.playAudio(reset)
         this.gameState = 'Please X start'
-        this.setState({ filds: Array(9).fill(null) })
-        this.setState({ count: 0 })
-    }
-   // reset count button 
+        this.setState({
+            filds: Array(9).fill(null),
+            count: 0
+        })
 
-   countReseter = () => {
-    this.playAudio(reset)
-    this.setState({ winnerX: 0 })
-    this.setState({ winnerO: 0 })
-}
+    }
+    // reset count button 
+
+    countReseter = () => {
+        this.playAudio(reset)
+        this.setState({
+            winnerX: 0,
+            winnerO: 0
+        })
+    }
 
     // play some sounds 
 
@@ -214,10 +212,17 @@ export default class Main extends Component {
     // soundSwitcher 
     soundSwitcher = () => {
         if (this.state.music) {
-            this.setState({ music: false });
-       
+            this.setState({
+                music: false,
+                musicState: 'OFF'
+            });
+
+
         } else {
-            this.setState({ music: true });
+            this.setState({
+                music: true,
+                musicState: 'ON'
+            });
         }
     }
 
@@ -252,18 +257,18 @@ export default class Main extends Component {
                 </div>
 
                 <div className='main_play_filed'>
-               
 
+                    <div className='win_counter'><Statistic winnerX={this.state.winnerX} winnerO={this.state.winnerO} /></div>
                     <div className='play_filed'> {this.makeFilds()} </div>
-                    {/* <div className='play_settings'>
+                    <div className='play_settings'>
                         <div className="button_sound">
-                            <button onClick={this.soundSwitcher} type="button" className="btn  btn-success"> Sound</button>
+                            <button onClick={this.soundSwitcher} type="button" className="btn  btn-success"> Sound is {this.state.musicState} </button>
                         </div>
-                        </div> */}
+                    </div>
                 </div>
 
-               
-                <div className='win_counter'><Statistic winnerX={this.state.winnerX} winnerO={this.state.winnerO} /></div>
+
+
 
 
             </div>

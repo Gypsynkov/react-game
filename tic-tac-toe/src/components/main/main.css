@@ -15,6 +15,7 @@
     min-width: 500px;
     display: flex;
     justify-content: space-around;
+    flex-direction: column;
 
 }
 .play_state{
@@ -30,6 +31,7 @@ display: flex;
 justify-content: space-around;
 align-items: center;
 flex-direction: column;
+padding-bottom: 30px;
 }
 .play_filed {
     width: 302px;
